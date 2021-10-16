@@ -36,4 +36,4 @@ jobs:
         with:
           tag_name: ${{ steps.bump_version.outputs.new_tag }}
           # TODO: Make sure you change this to point the files you generate.
-          files: $(shell basename "$(PWD)")
+          files: bin/*
