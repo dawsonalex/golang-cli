@@ -29,7 +29,7 @@ jobs:
           DEFAULT_BUMP: none
           DRY_RUN: true
 
-      - uses: actions-ecosystem/action-push-tag@v1
+      - uses: ncipollo/release-action@v1
         with:
-          tag: ${{ steps.bump_version.outputs.new_tag }}
-          message: 'Creating tag: ${{ steps.bump_version.outputs.new_tag }}'
+          artifacts: "README.md"
+          token: ${{ secrets.GITHUB_TOKEN }}
