@@ -13,6 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+        #      - name: Set up Go
+        #        uses: actions/setup-go@v2
+        #        with:
+        #          go-version: 1.17
+
+        # TODO: Do test / build here.
+
       - name: Bump version and push tag
         id: bump_version
         uses: anothrNick/github-tag-action@1.36.0
@@ -20,3 +27,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: false
           DEFAULT_BUMP: none
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1.8.10
+        with:
+          artifacts: README.md
