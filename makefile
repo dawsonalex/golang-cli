@@ -1,70 +1,24 @@
+BIN_DIR := $(GOPATH)/bin# Directory for cli binaries
+BINARY ?= $(shell basename "$(PWD)")# binary name
+RELEASE_PLATFORMS := $(linux darwin)# release platforms to build for
+os = $(word 1, $@)
+CMD := $(wildcard cmd/*.go)
 
-PROJECTNAME=$(shell basename "$(PWD)")
+# Fetch golangci-lint tool.
+$(GOLINTER):
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
 
-# Go related variables.
-GOBASE=$(shell pwd)
-GOPATH="$(GOBASE)/vendor:$(GOBASE)"
-GOBIN=$(GOBASE)/bin
-GOFILES=$(wildcard cmd/*.go)
+# Run build for each release candidate
+.PHONY: $(RELEASE_PLATFORMS)
+$(RELEASE_PLATFORMS):
+	mkdir -p build
+	GOOS=$(os) GOARCH=amd64 go build -o build/$(BINARY)-$(os)-amd64 $(CMD)
 
-# Redirect error output to a file, so we can show it in development mode.
-STDERR=/tmp/.$(PROJECTNAME)-stderr.txt
+# build the linux release
+.PHONY: build
+build: linux darwin
 
-# PID file will keep the process id of the server
-PID=/tmp/.$(PROJECTNAME).pid
-
-# Make is verbose in Linux. Make it silent.
-MAKEFLAGS += --silent
-
-## install: Install missing dependencies. Runs `go get` internally. e.g; make install get=github.com/foo/bar
-install: go-get
-
-## watch: Run given command when code changes. e.g; make watch run="echo 'hey'"
-watch:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) yolo -i . -e vendor -e bin -c "$(run)"
-
-## compile: Compile the binary.
-compile:
-	@-touch $(STDERR)
-	@-rm $(STDERR)
-	@-$(MAKE) -s go-compile 2> $(STDERR)
-	@cat $(STDERR) | sed -e '1s/.*/\nError:\n/'  | sed 's/make\[.*/ /' | sed "/^/s/^/     /" 1>&2
-
-## exec: Run given command, wrapped with custom GOPATH. e.g; make exec run="go test ./..."
-exec:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) $(run)
-
-## clean: Clean build files. Runs `go clean` internally.
-clean:
-	@(MAKEFILE) go-clean
-
-go-compile: go-clean go-build # Add go-get after go-clean here
-
-go-build:
-	@echo "  >  Building binary..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go build -o $(GOBIN)/$(PROJECTNAME) $(GOFILES)
-
-go-generate:
-	@echo "  >  Generating dependency files..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go generate $(generate)
-
-go-get:
-	@echo "  >  Checking if there is any missing dependencies..."
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go get $(get)
-
-go-install:
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go install $(GOFILES)
-
-go-clean:
-	@echo "  >  Cleaning build cache"
-	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) go clean
-
-.PHONY: help
-all: help
-help: Makefile
-	@echo
-	@echo " Taken from https://kodfabrik.com/journal/a-good-makefile-for-go"
-	@echo " Choose a command run in "$(PROJECTNAME)":"
-	@echo
-	@sed -n 's/^##//p' $< | column -t -s ':' |  sed -e 's/^/ /'
-	@echo
+# Clean the build directory (before commiting code, for example)
+.PHONY: clean
+clean: 
+	rm -rv build
