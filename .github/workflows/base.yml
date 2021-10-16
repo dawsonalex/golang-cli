@@ -13,12 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-        #      - name: Set up Go
-        #        uses: actions/setup-go@v2
-        #        with:
-        #          go-version: 1.17
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
 
-        # TODO: Do test / build here.
+      # TODO: Test here
+
+      - name: Compile
+        run: make compile
 
       - name: Bump version and push tag
         id: bump_version
@@ -32,4 +35,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.bump_version.outputs.new_tag }}
-          files: README.md
+          # TODO: Make sure you change this to point the files you generate.
+          files: $(shell basename "$(PWD)")
