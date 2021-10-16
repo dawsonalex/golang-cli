@@ -31,4 +31,5 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.8.10
         with:
+          tag: ${{ steps.bump_version.new_tag }}
           artifacts: README.md
