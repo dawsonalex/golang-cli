@@ -21,7 +21,7 @@ jobs:
       # TODO: Test here
 
       - name: Compile
-        run: make compile
+        run: make release
 
       - name: Bump version and push tag
         id: bump_version
