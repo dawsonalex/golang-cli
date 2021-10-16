@@ -5,7 +5,7 @@ PROJECTNAME=$(shell basename "$(PWD)")
 GOBASE=$(shell pwd)
 GOPATH="$(GOBASE)/vendor:$(GOBASE)"
 GOBIN=$(GOBASE)/bin
-GOFILES=$(wildcard *.go)
+GOFILES=$(wildcard cmd/*.go)
 
 # Redirect error output to a file, so we can show it in development mode.
 STDERR=/tmp/.$(PROJECTNAME)-stderr.txt
@@ -23,8 +23,6 @@ install: go-get
 watch:
 	@GOPATH=$(GOPATH) GOBIN=$(GOBIN) yolo -i . -e vendor -e bin -c "$(run)"
 
-restart-server: stop-server start-server
-
 ## compile: Compile the binary.
 compile:
 	@-touch $(STDERR)
@@ -40,7 +38,7 @@ exec:
 clean:
 	@(MAKEFILE) go-clean
 
-go-compile: go-clean go-get go-build
+go-compile: go-clean go-build # Add go-get after go-clean here
 
 go-build:
 	@echo "  >  Building binary..."
