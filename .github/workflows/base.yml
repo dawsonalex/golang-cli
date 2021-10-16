@@ -11,6 +11,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+
         #      - name: Set up Go
         #        uses: actions/setup-go@v2
         #        with:
@@ -25,8 +27,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: false
           DEFAULT_BUMP: none
+          dry_run: true
 
-      - uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-push-tag@v1
+        with:
+          tag: ${{ steps.bump_version.outputs.new_tag }}
+          message: 'Creating tag: ${{ steps.bump_version.outputs.new_tag }}'
 
       - name: Create Release
         uses: ncipollo/release-action@v1.8.10
