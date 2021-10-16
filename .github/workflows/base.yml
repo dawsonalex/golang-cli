@@ -33,9 +33,3 @@ jobs:
         with:
           tag: ${{ steps.bump_version.outputs.new_tag }}
           message: 'Creating tag: ${{ steps.bump_version.outputs.new_tag }}'
-
-      - name: Create Release
-        uses: ncipollo/release-action@v1.8.10
-        with:
-          tag: ${{ steps.bump_version.new_tag }}
-          artifacts: README.md
