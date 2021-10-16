@@ -18,7 +18,7 @@ arch = $(word 2, $(temp))
 release: $(PLATFORMS)
 
 $(PLATFORMS):
-	GOOS=$(os) GOARCH=$(arch) go build -o 'bin/$(os)/$(arch)/$(BINARY)' $(CMD)
+	GOOS=$(os) GOARCH=$(arch) go build -o 'bin/$(BINARY)-$(os)-$(arch)' $(CMD)
 
 .PHONY: release $(PLATFORMS)
 
