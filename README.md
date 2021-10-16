@@ -17,4 +17,4 @@ If you want to use this template for a Go module, run:
 go mod init
 ```
 
-You can then use the `Makefile` to run common commands. To see available commands, run `make help`.
+You can then use the `make release` to build the application.
