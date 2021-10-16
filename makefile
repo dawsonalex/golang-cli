@@ -9,7 +9,7 @@ CMD := $(wildcard cmd/*.go)
 clean: 
 	rm -rv bin
 
-PLATFORMS := linux/amd64 windows/amd64 darwin/amd64 
+PLATFORMS := linux/amd64 windows/amd64 darwin/amd64 darwin/arm64
 
 temp = $(subst /, ,$@)
 os = $(word 1, $(temp))
