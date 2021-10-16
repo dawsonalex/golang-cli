@@ -20,5 +20,5 @@ release: $(PLATFORMS)
 $(PLATFORMS):
 	GOOS=$(os) GOARCH=$(arch) go build -o 'bin/$(os)/$(arch)/$(BINARY)' $(CMD)
 
-.PHONY release $(PLATFORMS)
+.PHONY: release $(PLATFORMS)
 
