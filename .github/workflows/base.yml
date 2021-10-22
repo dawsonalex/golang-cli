@@ -35,5 +35,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.bump_version.outputs.new_tag }}
-          # TODO: Make sure you change this to point the files you generate.
           files: bin/**
