@@ -1,4 +1,7 @@
 # golang-cli
+
+![build](https://github.com/dawsonalex/golang-cli/actions/workflows/base.yml/badge.svg)
+
 A template for CLI applications in Golang.
 
 ## Why?
