@@ -1,4 +1,4 @@
-name: Tag
+name: Build
 
 on:
   push:

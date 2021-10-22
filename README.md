@@ -1,6 +1,6 @@
 # golang-cli
 
-![example workflow](https://github.com/dawsona/golang-cli/workflows/base/badge.svg)
+![example workflow](https://github.com/dawsonalex/golang-cli/workflows/Tag/badge.svg)
 
 A template for CLI applications in Golang.
 
