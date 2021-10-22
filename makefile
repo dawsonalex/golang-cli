@@ -4,7 +4,7 @@ RELEASE_PLATFORMS := $(linux darwin)# release platforms to build for
 os = $(word 1, $@)
 CMD := $(wildcard cmd/*.go)
 
-# Clean the build directory (before commiting code, for example)
+# Clean the build directory (before committing code, for example)
 .PHONY: clean
 clean: 
 	rm -rv bin
