@@ -1,4 +1,4 @@
-BINARY ?= $(shell basename "$(PWD)")# binary name
+BINARY ?= $(shell basename "$(pwd)")# binary name
 CMD := $(wildcard cmd/*.go)
 temp = $(subst /, ,$@)
 os = $(word 1, $(temp))
