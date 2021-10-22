@@ -18,7 +18,8 @@ jobs:
         with:
           go-version: 1.17
 
-      # TODO: Test here
+      - name: Test
+        run: go test -v ./...
 
       - name: Compile
         run: make release
