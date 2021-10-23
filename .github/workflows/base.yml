@@ -32,11 +32,17 @@ jobs:
           WITH_V: false
           DEFAULT_BUMP: none
 
-      - run: echo 'version part is; ${{steps.bump_version.outputs.part}}'
+      - name: Changelog
+        uses: Bullrich/generate-release-changelog@master
+        id: changelog
+        env:
+          REPO: ${{ github.repository }}
 
       - name: Release
         uses: softprops/action-gh-release@v1
         if: ${{ steps.bump_version.outputs.part != '' }}
         with:
           tag_name: ${{ steps.bump_version.outputs.new_tag }}
+          body: |
+            ${{ steps.changelog.outputs.changelog }}
           files: bin/**
