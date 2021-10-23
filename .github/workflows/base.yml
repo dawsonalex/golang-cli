@@ -32,9 +32,11 @@ jobs:
           WITH_V: false
           DEFAULT_BUMP: none
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: ${{ steps.bump_version.outputs.part != '#none' }}
-        with:
-          tag_name: ${{ steps.bump_version.outputs.new_tag }}
-          files: bin/**
+      - run: echo 'version part is; ${steps.bump_version.outputs.part}'
+
+#      - name: Release
+#        uses: softprops/action-gh-release@v1
+#        if: ${{ steps.bump_version.outputs.part != '#none' }}
+#        with:
+#          tag_name: ${{ steps.bump_version.outputs.new_tag }}
+#          files: bin/**
