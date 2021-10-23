@@ -32,7 +32,7 @@ jobs:
           WITH_V: false
           DEFAULT_BUMP: none
 
-      - run: echo 'version part is; ${steps.bump_version.outputs.part}'
+      - run: echo 'version part is; ${{steps.bump_version.outputs.part}}'
 
 #      - name: Release
 #        uses: softprops/action-gh-release@v1
